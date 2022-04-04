@@ -1,25 +1,15 @@
 const displayContainer = document.getElementById('display');
 const workingDisplay = document.getElementById('workingDisplay');
-const resultDisplay = document.getElementById('resultDispaly');
+const resultDisplay = document.getElementById('resultDisplay');
+
 const clearBtn = document.getElementById('clearBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const equalsBtn = document.getElementById('equalsBtn');
 const decimalBtn = document.getElementById('decimalBtn');
-const exponentBtn = document.getElementById('exponentBtn');
-const divideBtn = document.getElementById('divideBtn');
-const multiplyBtn = document.getElementById('multiplyBtn');
-const addBtn = document.getElementById('addBtn');
-const subtractBtn = document.getElementById('subtractBtn');
-const zeroBtn = document.getElementById('zero');
-const oneBtn = document.getElementById('one');
-const twoBtn = document.getElementById('two');
-const threeBtn = document.getElementById('three');
-const fourBtn = document.getElementById('four');
-const fiveBtn = document.getElementById('five');
-const sixBtn = document.getElementById('six');
-const sevenBtn = document.getElementById('seven');
-const eightBtn = document.getElementById('eight');
-const nineBtn = document.getElementById('nine');
+
+let displayValue;
+let evaluationCounter = 0;
+const history = []; //array within which all of the evaluationObjects are stored
 
 // My goal here:
 //have buttons populate the display screen
@@ -27,30 +17,46 @@ const nineBtn = document.getElementById('nine');
 //the object has the keys first operand, second operand, operator, and result
 //these objects should provide accessibility to the values, and also allow for a history tab down the line
 
-let displayValue;
-let firstOperand = '';
-let secondOperand = '';
-let operatorInput = '';
-const history = [];
-let objectCounter = 1;
 
-/*
-function pressEquals () { //creates evaluationObject, stores to history array, ...evaluates calculator fxn...
-    const displayArr = workingDisplay.textContent.split('');
+equalsBtn.addEventListener('click', pressEquals); //equals button
+
+clearBtn.addEventListener('click', ()=>{ //clear button
+    workingDisplay.textContent = '';
+    resultDisplay.textContent = '';
+})
+deleteBtn.addEventListener('click', ()=>{ //delete button
+    let string = workingDisplay.textContent;
+    string = string.substring(0, string.length-1);
+    workingDisplay.textContent = string;
+})
+let btnClick = (e) => { //adds button data-number or data-operator to workingDisplay
+    if (!(e.getAttribute('data-operator'))) {
+        let numberInput = e.getAttribute('data-number');
+        workingDisplay.textContent += numberInput;
+    } else if (!(e.getAttribute('data-number'))) {
+        let opInput = e.getAttribute('data-operator');
+        workingDisplay.textContent += ` ${opInput} `;
+    }
+}
+
+function pressEquals () { //creates evaluationObject, stores to history array, ...evaluates calculator fxn... 
+    createObject();
+    console.log(history);
+    let a = history[evaluationCounter].firstOperand;
+    let b = history[evaluationCounter].secondOperand;
+    let operator = history[evaluationCounter].operatorInput;
+    resultDisplay.textContent = operate(a,b,operator);
+    evaluationCounter++;
+}
+
+function createObject () { // creates an object from workingDisplay.textContent -- called by pressEquals()
+    const displayArr = workingDisplay.textContent.split(' ');
     const evaluationObject = new Object();
-    evaluationObject.objectCounter = objectCounter;
     evaluationObject.firstOperand = displayArr[0];
     evaluationObject.operatorInput = displayArr[1];
     evaluationObject.secondOperand = displayArr[2];
     evaluationObject.result = resultDisplay.textContent;
     history.push(evaluationObject);
-    objectCounter++;
-}
-*/
-//I am commenting this fxn out until I get the display working
-
-function clearDisplay () {
-
 }
 
 function operate (a,b,operator) { //performs evaluation of calculator inputs
@@ -62,13 +68,13 @@ function operate (a,b,operator) { //performs evaluation of calculator inputs
         return multiply(a,b);
     } else if (operator === '/') {
         return divide(a,b);
-    } else if (operator === 'n') {
+    } else if (operator === '^') {
         return exponent(a,b);
     }
 }
 
 function add (a,b) {
-    return a + b;
+    return parseInt(a) + parseInt(b);
 }
 function subtract (a,b) {
     return a - b;
