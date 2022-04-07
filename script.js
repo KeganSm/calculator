@@ -6,16 +6,11 @@ const clearBtn = document.getElementById('clearBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const equalsBtn = document.getElementById('equalsBtn');
 const decimalBtn = document.getElementById('decimalBtn');
+const plusMinusBtn = document.getElementById('plusMinus');
 
-let displayValue;
+let multipleOperator;
 let evaluationCounter = 0;
 const history = []; //array within which all of the evaluationObjects are stored
-
-// My goal here:
-//have buttons populate the display screen
-//each time 'equals' is clicked, it creates an object from a string array taken from the display screen
-//the object has the keys first operand, second operand, operator, and result
-//these objects should provide accessibility to the values, and also allow for a history tab down the line
 
 
 equalsBtn.addEventListener('click', pressEquals); //equals button
@@ -24,38 +19,65 @@ clearBtn.addEventListener('click', ()=>{ //clear button
     workingDisplay.textContent = '';
     resultDisplay.textContent = '';
 })
+
 deleteBtn.addEventListener('click', ()=>{ //delete button
     let string = workingDisplay.textContent;
     string = string.substring(0, string.length-1);
     workingDisplay.textContent = string;
 })
+
+/*
+plusMinusBtn.addEventListener('click', ()=>{
+    if                                          //...working on the +/-...
+})
+*/
+
 let btnClick = (e) => { //adds button data-number or data-operator to workingDisplay
     if (!(e.getAttribute('data-operator'))) {
         let numberInput = e.getAttribute('data-number');
         workingDisplay.textContent += numberInput;
     } else if (!(e.getAttribute('data-number'))) {
         let opInput = e.getAttribute('data-operator');
-        workingDisplay.textContent += ` ${opInput} `;
-    }
+        if (workingDisplay.textContent.includes('+') || workingDisplay.textContent.includes('-') || //allows for multiple operators
+            workingDisplay.textContent.includes('*') || workingDisplay.textContent.includes('/') || 
+            workingDisplay.textContent.includes('^')) {
+                createObject(); // I couldnt figure out a way to condense this to pressEquals() and store it to multipleOperator
+                let a = history[evaluationCounter].firstOperand;
+                let b = history[evaluationCounter].secondOperand;
+                let operator = history[evaluationCounter].operatorInput;
+                multipleOperator = operate(a,b,operator);
+                resultDisplay.textContent = multipleOperator;
+                history[evaluationCounter].result = resultDisplay.textContent;
+                console.log(history);
+                workingDisplay.textContent = `${multipleOperator} ${opInput} `;
+                evaluationCounter++;
+            } else {
+                workingDisplay.textContent += ` ${opInput} `;
+            }
+        }
 }
 
 function pressEquals () { //creates evaluationObject, stores to history array, ...evaluates calculator fxn... 
     createObject();
-    console.log(history);
     let a = history[evaluationCounter].firstOperand;
     let b = history[evaluationCounter].secondOperand;
     let operator = history[evaluationCounter].operatorInput;
     resultDisplay.textContent = operate(a,b,operator);
+    history[evaluationCounter].result = resultDisplay.textContent;
+    console.log(history);
     evaluationCounter++;
 }
 
+function evalMultipleOperators () {
+
+}
+
 function createObject () { // creates an object from workingDisplay.textContent -- called by pressEquals()
-    const displayArr = workingDisplay.textContent.split(' ');
+    const displayArr = workingDisplay.textContent.split(' '); //creates array from string
     const evaluationObject = new Object();
     evaluationObject.firstOperand = displayArr[0];
     evaluationObject.operatorInput = displayArr[1];
     evaluationObject.secondOperand = displayArr[2];
-    evaluationObject.result = resultDisplay.textContent;
     history.push(evaluationObject);
 }
 
