@@ -8,8 +8,8 @@ const equalsBtn = document.getElementById('equalsBtn');
 const decimalBtn = document.getElementById('decimalBtn');
 const plusMinusBtn = document.getElementById('plusMinus');
 
-let multipleOperator;
 let evaluationCounter = 0;
+let decimalCheck = false; //used to allow decimals after the operator
 const history = []; //array within which all of the evaluationObjects are stored
 
 
@@ -26,11 +26,21 @@ deleteBtn.addEventListener('click', ()=>{ //delete button
     workingDisplay.textContent = string;
 })
 
-/*
-plusMinusBtn.addEventListener('click', ()=>{
-    if                                          //...working on the +/-...
+decimalBtn.addEventListener('click', ()=>{ //decimal button
+    if (workingDisplay.textContent.includes('.')) {
+       if (decimalCheck === true) { //checks if there is a decimal before the operator, allowing for a decimal after the operator
+           workingDisplay.textContent += '.';
+           decimalCheck = false;
+       }
+        return;
+    } 
+    workingDisplay.textContent += '.';
 })
-*/
+
+plusMinusBtn.addEventListener('click', ()=>{
+                                        //...working on the +/-...
+})
+
 
 let btnClick = (e) => { //adds button data-number or data-operator to workingDisplay
     if (!(e.getAttribute('data-operator'))) {
@@ -38,19 +48,14 @@ let btnClick = (e) => { //adds button data-number or data-operator to workingDis
         workingDisplay.textContent += numberInput;
     } else if (!(e.getAttribute('data-number'))) {
         let opInput = e.getAttribute('data-operator');
+        if (workingDisplay.textContent.includes('.')) {
+            decimalCheck = true; //if there is a decimal before the operator, allows for second decimal point
+        }
         if (workingDisplay.textContent.includes('+') || workingDisplay.textContent.includes('-') || //allows for multiple operators
             workingDisplay.textContent.includes('*') || workingDisplay.textContent.includes('/') || 
             workingDisplay.textContent.includes('^')) {
-                createObject(); // I couldnt figure out a way to condense this to pressEquals() and store it to multipleOperator
-                let a = history[evaluationCounter].firstOperand;
-                let b = history[evaluationCounter].secondOperand;
-                let operator = history[evaluationCounter].operatorInput;
-                multipleOperator = operate(a,b,operator);
-                resultDisplay.textContent = multipleOperator;
-                history[evaluationCounter].result = resultDisplay.textContent;
-                console.log(history);
-                workingDisplay.textContent = `${multipleOperator} ${opInput} `;
-                evaluationCounter++;
+                pressEquals();
+                workingDisplay.textContent = `${resultDisplay.textContent} ${opInput} `;
             } else {
                 workingDisplay.textContent += ` ${opInput} `;
             }
@@ -59,6 +64,10 @@ let btnClick = (e) => { //adds button data-number or data-operator to workingDis
 
 function pressEquals () { //creates evaluationObject, stores to history array, ...evaluates calculator fxn... 
     createObject();
+    if (history[evaluationCounter].firstOperand === '' || 
+        history[evaluationCounter].secondOperand === '') { //prevents weird values stemming from pressing =
+        return resultDisplay.textContent = '';
+    }
     let a = history[evaluationCounter].firstOperand;
     let b = history[evaluationCounter].secondOperand;
     let operator = history[evaluationCounter].operatorInput;
@@ -66,10 +75,6 @@ function pressEquals () { //creates evaluationObject, stores to history array, .
     history[evaluationCounter].result = resultDisplay.textContent;
     console.log(history);
     evaluationCounter++;
-}
-
-function evalMultipleOperators () {
-
 }
 
 function createObject () { // creates an object from workingDisplay.textContent -- called by pressEquals()
@@ -83,30 +88,14 @@ function createObject () { // creates an object from workingDisplay.textContent 
 
 function operate (a,b,operator) { //performs evaluation of calculator inputs
     if (operator === '+') {
-        return add(a,b);
+        return parseFloat(a) + parseFloat(b);
     } else if (operator === '-') {
-        return subtract(a,b);
+        return a - b;
     } else if (operator === '*') {
-        return multiply(a,b);
+        return a * b;
     } else if (operator === '/') {
-        return divide(a,b);
+        return a / b;
     } else if (operator === '^') {
-        return exponent(a,b);
+        return a ** b;
     }
-}
-
-function add (a,b) {
-    return parseInt(a) + parseInt(b);
-}
-function subtract (a,b) {
-    return a - b;
-}
-function multiply (a,b) {
-    return a * b;
-}
-function divide (a,b) {
-    return a / b;
-}
-function exponent (a,b) {
-    return a ** b;
 }
