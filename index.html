@@ -10,41 +10,46 @@
 </head>
 <body>
     <div id='calculator'>
+        <div id='leftSide'>
+            <div id='historyDiv'></div>
+        </div>
+        <div id='rightSide'>
         <div id='display'>
             <div id='workingDisplay'></div>
             <div id='resultDisplay'></div>
         </div>
         <div id='buttons'>
             <div class='row' id='rowOne'>
-                <button class='btn' id='clearBtn'>Clear</button>
-                <button class='btn' id='deleteBtn'>Delete</button>
-                <button class='btn' id='exponentBtn' data-operator='^' onclick="btnClick(this);">x<sup>y</sup></button>
-                <button class='btn' id='divideBtn' data-operator='/' onclick="btnClick(this);">÷</button>
+                <button class='btn-orange' id='clearBtn'>Clear</button>
+                <button class='btn-orange' id='deleteBtn'>Delete</button>
+                <button class='btn-dark' id='exponentBtn' data-operator='^' onclick="btnClick(this);">x<sup>y</sup></button>
+                <button class='btn-dark' id='divideBtn' data-operator='/' onclick="btnClick(this);">÷</button>
             </div>
             <div class='row' id='rowTwo'>
                 <button class='btn' id='seven' data-number='7' onclick="btnClick(this);">7</button>
                 <button class='btn' id='eight' data-number='8' onclick="btnClick(this);">8</button>
                 <button class='btn' id='nine' data-number='9' onclick="btnClick(this);">9</button>
-                <button class='btn' id='multiplyBtn' data-operator='*' onclick="btnClick(this);">×</button>
+                <button class='btn-dark' id='multiplyBtn' data-operator='*' onclick="btnClick(this);">×</button>
             </div>
             <div class='row' id='rowThree'>
                 <button class='btn' id='four' data-number='4' onclick="btnClick(this);">4</button>
                 <button class='btn' id='five' data-number='5' onclick="btnClick(this);">5</button>
                 <button class='btn' id='six' data-number='6' onclick="btnClick(this);">6</button>
-                <button class='btn' id='addBtn' data-operator='+' onclick="btnClick(this);">+</button>
+                <button class='btn-dark' id='addBtn' data-operator='+' onclick="btnClick(this);">+</button>
             </div>
             <div class='row' id='rowFour'>
                 <button class='btn' id='one' data-number='1' onclick="btnClick(this);">1</button>
                 <button class='btn' id='two' data-number='2' onclick="btnClick(this);">2</button>
                 <button class='btn' id='three' data-number='3' onclick="btnClick(this);">3</button>
-                <button class='btn' id='subtractBtn' data-operator='-' onclick="btnClick(this);">-</button>
+                <button class='btn-dark' id='subtractBtn' data-operator='-' onclick="btnClick(this);">-</button>
             </div>
             <div class='row' id='rowFive'>
-                <button class='btn' id='plusMinus'>+/-</button>
+                <button class='btn' id='plusMinus'>:)</button>
                 <button class='btn' id='zero' data-number='0' onclick="btnClick(this);">0</button>
                 <button class='btn' id='decimalBtn'>.</button>
-                <button class='btn' id='equalsBtn'>=</button>
+                <button class='btn-dark' id='equalsBtn'>=</button>
             </div>
+        </div>
         </div>
     </div>
 </body>

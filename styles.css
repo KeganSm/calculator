@@ -1,8 +1,114 @@
+body {
+    background-color: rgb(114, 114, 114);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
 #display {
-    height: 50px;
-    width: 200px;
+    height: 125px;
+    width: 300px;
     border-radius: 5px;
     border-color: black;
     border-width: 3px;
-    background-color: cadetblue;
+    background-color: rgb(133, 179, 185);
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+}
+#workingDisplay {
+    height: 40px;
+    font-size: 30px;
+    font-family: 'Monaco';
+    color: rgb(27, 30, 34);
+    padding-left: 15px;
+    padding-top: 10px;
+    overflow-x: scroll;
+}
+#resultDisplay {
+    text-align: right;
+    justify-items: flex-end;
+    font-size: 50px;
+    font-family: 'Monaco';
+    color: rgb(27, 30, 34);
+    padding-right: 15px;
+    overflow-x: scroll;
+}
+#calculator {
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    align-self: center;
+    justify-self: center;
+    height: 482px;
+}
+#leftSide {
+    width: 150px;
+    height: auto;
+    background-color: rgb(27, 30, 34);
+    color: rgb(187, 255, 255);
+    padding: 10px;
+    padding-top: 10px;
+    overflow-y: scroll;
+}
+#rightSide {
+    background-color: rgb(42, 89, 133);
+    padding: 4px;
+}
+.calcHistory {
+    border-bottom: 2px solid;
+    border-color: rgb(187, 255, 255);
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    height: 36px;
+    font-family: 'Monaco';
+    font-style: italic;
+    overflow-x: scroll;
+}
+.row {
+    display: flex;
+    justify-content: space-evenly;
+}
+.btn-orange {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    border-width: 0px;
+    margin: 2px;
+    background-color: rgb(219, 110, 59);
+    font-size: 14px;
+    font-family: 'Monaco';
+}
+.btn-dark {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    border-width: 0px;
+    margin: 2px;
+    background-color: rgb(27, 30, 34);
+    color: rgb(187, 255, 255);
+}
+.btn {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    border-width: 0px;
+    font-family: 'Monaco';
+    margin: 2px;
+    background-color: var(--btn);
+}
+button {
+    color: inherit;
+    transition-duration: 0.15s;
+    box-shadow: 1px 1px rgb(44, 42, 42);
+    font-size: 24px;
+}
+button:hover {
+    background-color: rgb(187, 255, 255);
+    color: black;
+    box-shadow: 2px 2px 1px  rgb(44, 42, 42);
+}
+:root {
+    --btn: rgb(133, 179, 185);
 }
